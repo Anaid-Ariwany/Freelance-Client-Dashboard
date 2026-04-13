@@ -49,6 +49,78 @@
 }
 
 
+html.dark {
+    --background-color: #0f172a;
+    /* Page background */
+
+    --surface-color: #1e293b;
+    /* Cards, panels */
+
+    --border-color: #334155;
+    /* Borders */
+
+
+    --color-primary: #3b82f6;
+    /* main brand: buttons */
+
+    --color-primary-light: #60a5fa;
+    /* active highlight */
+
+    --color-primary-dark: #1d4ed8;
+    /* side nav */
+
+
+    --headings-color: #f1f5f9;
+    /* Headings */
+
+    --subtext-color: #cbd5f5;
+    /* Subtext */
+
+    --labels-color: #94a3b8;
+    /* Labels */
+
+    --text-color: #e2e8f0;
+    /* Regular text */
+
+
+    --success-color: #22c55e;
+    /* Completed */
+
+    --warning-color: #fbbf24;
+    /* Pending */
+
+    --danger-color: #ef4444;
+    /* Overdue / Delete */
+
+
+    --sidebar-bg: #020617;
+    /* deeper than main bg for contrast */
+
+    --sidebar-text: #cbd5f5;
+
+    --sidebar-active: #3b82f6;
+
+
+    --heading-font-size: 1.5rem;
+    --heading-font-weight: 600;
+
+    --subheading-font-size: 1.25rem;
+    --subheading-font-weight: 500;
+
+    --subtext-font-size: 0.9rem;
+    --subtext-font-weight: 400;
+
+    --text-font-size: 1.15rem;
+    --text-font-weight: 400;
+}
+
+* {
+    transition: background-color 0.3s ease,
+        color 0.3s ease,
+        border-color 0.3s ease;
+}
+
+
 body {
     margin: 0;
     padding: 0;
