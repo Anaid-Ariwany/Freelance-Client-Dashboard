@@ -130,3 +130,20 @@ body {
     background-color: var(--background-color);
     color: var(--text-color);
 }
+
+.sidebar {
+    background-color: var(--sidebar-bg);
+    color: var(--sidebar-text);
+    min-height: 100vh;
+    padding: 1rem;
+}
+
+.logo {
+    width: 20rem;
+    height: auto;
+}
+
+.sidebarIcon {
+    width: 2.3rem;
+    height: 2.3rem;
+}
