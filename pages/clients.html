@@ -99,11 +99,59 @@
         <section class="col-sm-9 rightSection">
             <h1>Freelance Client Dashboard</h1>
 
-            <button>Add Client</button>
+            <button type="button" class="btn btn-primary addClientButton" data-bs-toggle="modal"
+                data-bs-target="#clientFormModal">Add
+                Client</button>
 
             <!-- client list -->
-            <div></div>
+            <div id="clientList">
+                <!-- Client items will be rendered here -->
+            </div>
         </section>
+
+
+        <!-- form in modal -->
+        <div class="modal fade" id="clientFormModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="clientFormModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="clientFormModalLabel">Add New Client</h5>
+                    </div>
+                    <div class="modal-body">
+                        <form id="clientForm">
+
+                            <div class="mb-3">
+                                <label for="clientName" class="form-label">Client Name</label>
+                                <input type="text" class="form-control" id="clientName" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="clientEmail" class="form-label">Client Email</label>
+                                <input type="email" class="form-control" id="clientEmail" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="clientCompany" class="form-label">Company</label>
+                                <input type="text" class="form-control" id="clientCompany">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="clientNotes" class="form-label">Notes</label>
+                                <textarea class="form-control" id="clientNotes" rows="3"></textarea>
+                            </div>
+
+                            <div class="mb-3 modal-footer">
+                                <button type="submit" id="formSubmitButton" class="btn btn-primary">Add Client</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
     </main>
 
     <!-- bootstrap -->
@@ -113,6 +161,8 @@
 
     <!-- custom js -->
     <script src="../script.js"></script>
+    <script src="../scripts/storage.js"></script>
+    <script src="../scripts/ui.js"></script>
 </body>
 
 </html>

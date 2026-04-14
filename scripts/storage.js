@@ -96,3 +96,32 @@ function updatePayment(paymentId, updatedPayment) {
     payments = payments.map(payment => payment.id === paymentId ? updatedPayment : payment);
     setData('payments', payments);
 }
+
+
+/* handle form submissions */
+const form = document.querySelector('#clientForm');
+const formModal = document.querySelector('#clientFormModal');
+const modal = new bootstrap.Modal(formModal);
+
+form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const clientId = form.getAttribute('data-id');
+    const clientData = {
+        id: clientId || Date.now().toString(),
+        name: document.querySelector('#clientName').value,
+        email: document.querySelector('#clientEmail').value,
+        company: document.querySelector('#clientCompany').value,
+        notes: document.querySelector('#clientNotes').value
+    };
+    if (clientId) {
+        updateClient(clientId, clientData);
+    }
+    else {
+        addClient(clientData);
+    }
+    renderClients();
+    form.reset();
+    modal.hide();
+});
+
+
