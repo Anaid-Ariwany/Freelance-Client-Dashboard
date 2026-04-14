@@ -131,16 +131,13 @@ body {
     color: var(--text-color);
 }
 
+
+/* ##### sidebar styling ##### */
 .sidebar {
     background-color: var(--sidebar-bg);
     color: var(--sidebar-text);
     min-height: 100vh;
     padding: 1rem;
-    /* display: flex;
-    flex-direction: column;
-    gap: 3rem;
-    align-items: flex-start;
-    justify-content: space-between; */
     padding: 2rem 1.5rem;
 }
 
@@ -189,4 +186,18 @@ div a {
 div h4:hover {
     background-color: var(--sidebar-active);
     border-radius: 0.5rem;
+}
+
+
+/* ##### right section styling ##### */
+.rightSection {
+    padding: 2rem;
+}
+
+.rightSection h1 {
+    font-weight: var(--heading-font-weight);
+    color: var(--headings-color);
+    border-bottom: 2px solid color-mix(in srgb, var(--border-color), transparent 20%);
+    padding-bottom: 1rem;
+    margin-bottom: 2rem;
 }
