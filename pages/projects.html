@@ -101,9 +101,71 @@
                 <input type="text" placeholder="Search projects..." class="searchInput">
             </div>
 
+            <div class="addButtonDiv">
+                <button type="button" class="addProjectButton" data-bs-toggle="modal"
+                    data-bs-target="#projectFormModal">Add
+                    Project</button>
+            </div>
+
             <!-- project list -->
             <div></div>
         </section>
+
+        <!-- form in modal -->
+        <div class="modal fade" id="projectFormModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="projectFormModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="projectFormModalLabel">Add Project</h5>
+                    </div>
+                    <div class="modal-body">
+                        <form id="projectForm">
+
+                            <div class="mb-3">
+                                <label for="projectName" class="form-label">Project Name</label>
+                                <input type="text" class="form-control" id="projectName" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="clientName" class="form-label">Client Name</label>
+                                <select class="form-select" id="clientName" required>
+                                    <option value="">Select Client</option>
+                                    <option value="Client A">Client A</option>
+                                    <option value="Client B">Client B</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="status" class="form-label">Status</label>
+                                <select class="form-select" id="status" required>
+                                    <option value="">Select Status</option>
+                                    <option value="Not Started">Not Started</option>
+                                    <option value="In Progress">In Progress</option>
+                                    <option value="Completed">Completed</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="deadline" class="form-label">Deadline</label>
+                                <input type="date" class="form-control" id="deadline" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="budget" class="form-label">Budget</label>
+                                <input type="number" class="form-control" id="budget" required>
+                            </div>
+
+                            <div class="mb-3 modal-footer">
+                                <button type="submit" id="formSubmitButton" class="btn btn-primary">Add Project</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </main>
 
     <!-- bootstrap -->

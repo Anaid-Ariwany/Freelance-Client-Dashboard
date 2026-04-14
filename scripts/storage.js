@@ -98,7 +98,7 @@ function updatePayment(paymentId, updatedPayment) {
 }
 
 
-/* handle form submissions */
+/* handle add client form submissions */
 const form = document.querySelector('#clientForm');
 const formModal = document.querySelector('#clientFormModal');
 const modal = new bootstrap.Modal(formModal);

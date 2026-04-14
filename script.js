@@ -34,6 +34,16 @@ addClientBtn.addEventListener('shown.bs.modal', () => {
     clientModal.focus();
 });
 
+
+/* project form modal */
+const addProjectBtn = document.querySelector(".addProjectButton");
+const projectModal = document.querySelector("#projectFormModal");
+
+addProjectBtn.addEventListener('shown.bs.modal', () => {
+    projectModal.focus();
+});
+
+
 /* 
 const myModal = document.getElementById('myModal')
 const myInput = document.getElementById('myInput')
