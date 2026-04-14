@@ -1,0 +1,91 @@
+table {
+    table-layout: fixed;
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--surface-color);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    border-radius: 0.5rem;
+}
+
+th,
+td {
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    text-align: center;
+}
+
+th {
+    background-color: color-mix(in srgb, var(--subtext-color), transparent 80%);
+    color: var(--headings-color);
+}
+
+td {
+    color: var(--text-color);
+}
+
+.addButtonDiv {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 1.5rem;
+}
+
+.notes-cell {
+    max-width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.addClientButton {
+    background-color: var(--color-primary);
+    color: var(--surface-color);
+    border: none;
+    padding: 0.5rem 1.5rem;
+    border-radius: 0.5rem;
+    max-width: max-content;
+    font-size: var(--subheading-font-size);
+    font-weight: var(--heading-font-weight);
+}
+
+.addClientButton:hover {
+    background-color: var(--color-primary-light);
+    color: var(--surface-color);
+    transform: scale(1.05);
+}
+
+.edit-btn {
+    background-color: var(--color-primary);
+    color: var(--surface-color);
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-size: var(--subheading-font-size);
+    font-weight: var(--heading-font-weight);
+}
+
+.edit-btn:hover {
+    background-color: var(--color-primary-light);
+    color: var(--surface-color);
+    transform: scale(1.05);
+}
+
+.delete-btn {
+    background-color: var(--danger-color);
+    color: var(--surface-color);
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-size: var(--subheading-font-size);
+    font-weight: var(--heading-font-weight);
+}
+
+.delete-btn:hover {
+    background-color: var(--warning-color);
+    color: var(--surface-color);
+    transform: scale(1.05);
+}
+
+.actions-cell {
+    display: flex;
+    gap: 1rem;
+}

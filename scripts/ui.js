@@ -14,8 +14,8 @@ function renderClients() {
             <td>${client.name}</td>
             <td>${client.email}</td>
             <td>${client.company}</td>
-            <td>${client.notes}</td>
-            <td>
+            <td class="notes-cell">${client.notes}</td>
+            <td class="actions-cell">
                 <button class="edit-btn" data-id="${client.id}">Edit</button>
                 <button class="delete-btn" data-id="${client.id}">Delete</button>
             </td>
@@ -28,9 +28,6 @@ function renderClients() {
 renderClients();
 
 /* handle edit and delete button */
-//edit button, ensure the user can edit the client data in the form and update the client data in local storage
-//the add button is changed to update button when editing a client, and the form is pre-filled with the client data
-//once the edit form closes, the add button is changed back to add and the form is reset and the form closes
 document.getElementById('clientList').addEventListener('click', (e) => {
     if (e.target.classList.contains('edit-btn')) {
         const clientId = e.target.getAttribute('data-id');
