@@ -169,10 +169,18 @@ if (projectForm && projectFormModal) {
         projectForm.reset();
         projectForm.removeAttribute('data-id');
 
-        const submitBtn = document.getElementById('formSubmitButton');
+        const submitBtn = document.getElementById('projectFormSubmitButton');
         if (submitBtn) submitBtn.textContent = 'Add Project';
 
         modal.hide();
+    });
+
+    projectFormModal.addEventListener('hidden.bs.modal', () => {
+        projectForm.reset();
+        projectForm.removeAttribute('data-id');
+
+        const submitBtn = document.getElementById('projectFormSubmitButton');
+        if (submitBtn) submitBtn.textContent = 'Add Project';
     });
 }
 

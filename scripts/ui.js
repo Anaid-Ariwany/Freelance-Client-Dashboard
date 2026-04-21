@@ -1,4 +1,5 @@
 let clientToDelete = null;
+let projectToDelete = null;
 
 //function to render clients
 function renderClients() {
@@ -42,13 +43,14 @@ if (clientListEl) clientListEl.addEventListener('click', (e) => {
         document.getElementById('clientCompany').value = client.company;
         document.getElementById('clientNotes').value = client.notes;
         document.getElementById('formSubmitButton').textContent = 'Update Client';
-        if (typeof form !== 'undefined' && form) form.setAttribute('data-id', clientId);
+        const clientForm = document.getElementById('clientForm');
+        if (clientForm) clientForm.setAttribute('data-id', clientId);
         const modal = new bootstrap.Modal(document.getElementById('clientFormModal'));
         modal.show();
 
         /* close modal on submit */
-        if (typeof form !== 'undefined' && form) {
-            form.addEventListener('submit', () => {
+        if (clientForm) {
+            clientForm.addEventListener('submit', () => {
                 modal.hide();
             });
         }
@@ -125,4 +127,64 @@ function renderProjects() {
 if (document.getElementById('projectList')) {
     renderProjects();
 }
+
+const projectListEl = document.getElementById('projectList');
+if (projectListEl) projectListEl.addEventListener('click', (e) => {
+    if (e.target.classList.contains('edit-project-btn')) {
+        const projectId = e.target.getAttribute('data-id');
+        const project = getData('projects').find(p => p.id === projectId);
+        if (!project) return;
+
+        const submitBtn = document.getElementById('projectFormSubmitButton');
+        if (submitBtn) submitBtn.textContent = 'Update Project';
+
+        const projectForm = document.getElementById('projectForm');
+        if (projectForm) projectForm.setAttribute('data-id', projectId);
+
+        const projectFormModalEl = document.getElementById('projectFormModal');
+        const modal = new bootstrap.Modal(projectFormModalEl);
+
+        const fillOnce = () => {
+            projectFormModalEl.removeEventListener('shown.bs.modal', fillOnce);
+
+            // ensure dropdown is populated before setting selection
+            if (typeof populateClientNameSelect === 'function') {
+                populateClientNameSelect();
+            }
+
+            document.getElementById('projectName').value = project.name || '';
+            document.getElementById('clientNameSelect').value = project.clientId || '';
+            document.getElementById('status').value = project.status || '';
+            document.getElementById('deadline').value = project.deadline || '';
+            document.getElementById('budget').value = project.budget ?? '';
+        };
+
+        projectFormModalEl.addEventListener('shown.bs.modal', fillOnce);
+        modal.show();
+
+        /* close modal on submit */
+        if (projectForm) {
+            projectForm.addEventListener('submit', () => {
+                modal.hide();
+            });
+        }
+    } else if (e.target.classList.contains('delete-project-btn')) {
+        projectToDelete = e.target.getAttribute('data-id');
+        const modal = new bootstrap.Modal(document.getElementById('confirmProjectDeleteModal'));
+        modal.show();
+    }
+});
+
+const confirmProjectDeleteBtn = document.getElementById('confirmProjectDeleteButton');
+if (confirmProjectDeleteBtn) confirmProjectDeleteBtn.addEventListener('click', () => {
+    if (projectToDelete) {
+        deleteProject(projectToDelete);
+        renderProjects();
+        projectToDelete = null;
+    }
+
+    const modalEl = document.getElementById('confirmProjectDeleteModal');
+    const modalInstance = bootstrap.Modal.getInstance(modalEl);
+    modalInstance.hide();
+});
 
