@@ -108,10 +108,23 @@
             </div>
 
             <!-- project list -->
-            <div></div>
+            <div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Company</th>
+                            <th>Notes</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="projectList"></tbody>
+                </table>
+            </div>
         </section>
 
-        <!-- form in modal -->
+        <!-- project form in modal -->
         <div class="modal fade" id="projectFormModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
             aria-labelledby="projectFormModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -128,11 +141,9 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="clientName" class="form-label">Client Name</label>
-                                <select class="form-select" id="clientName" required>
+                                <label for="clientNameSelect" class="form-label">Client Name</label>
+                                <select class="form-select" id="clientNameSelect" required>
                                     <option value="">Select Client</option>
-                                    <option value="Client A">Client A</option>
-                                    <option value="Client B">Client B</option>
                                 </select>
                             </div>
 
@@ -174,6 +185,8 @@
         crossorigin="anonymous"></script>
 
     <!-- custom js -->
+    <script src="../scripts/storage.js"></script>
+    <script src="../scripts/ui.js"></script>
     <script src="../script.js"></script>
 </body>
 
