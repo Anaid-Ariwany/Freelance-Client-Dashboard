@@ -1,0 +1,114 @@
+table {
+    table-layout: fixed;
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--surface-color);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    border-radius: 0.5rem;
+}
+
+th,
+td {
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    text-align: center;
+}
+
+th {
+    background-color: color-mix(in srgb, var(--subtext-color), transparent 80%);
+    color: var(--headings-color);
+}
+
+td {
+    color: var(--text-color);
+}
+
+.addButtonDiv {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 1.5rem;
+}
+
+.addProjectButton {
+    background-color: var(--color-primary);
+    color: var(--surface-color);
+    border: none;
+    padding: 0.5rem 1.5rem;
+    border-radius: 0.5rem;
+    max-width: max-content;
+    font-size: var(--subheading-font-size);
+    font-weight: var(--heading-font-weight);
+}
+
+.addProjectButton:hover {
+    background-color: var(--color-primary-light);
+    color: var(--surface-color);
+    transform: scale(1.05);
+}
+
+.edit-project-btn {
+    background-color: var(--color-primary);
+    color: var(--surface-color);
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-weight: var(--heading-font-weight);
+}
+
+.edit-project-btn:hover {
+    background-color: var(--color-primary-light);
+    color: var(--surface-color);
+    transform: scale(1.05);
+}
+
+.delete-project-btn {
+    background-color: var(--danger-color);
+    color: var(--surface-color);
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-weight: var(--heading-font-weight);
+}
+
+.delete-project-btn:hover {
+    background-color: var(--warning-color);
+    color: var(--surface-color);
+    transform: scale(1.05);
+}
+
+.actions-cell {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.status-pill {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    font-weight: var(--heading-font-weight);
+    border: 1px solid color-mix(in srgb, var(--border-color), transparent 40%);
+    background-color: color-mix(in srgb, var(--surface-color), transparent 30%);
+}
+
+.status-not-started {
+    color: var(--danger-color);
+    border-color: color-mix(in srgb, var(--danger-color), transparent 55%);
+    background-color: color-mix(in srgb, var(--danger-color), transparent 88%);
+}
+
+.status-in-progress {
+    color: var(--warning-color);
+    border-color: color-mix(in srgb, var(--warning-color), transparent 55%);
+    background-color: color-mix(in srgb, var(--warning-color), transparent 88%);
+}
+
+.status-completed {
+    color: var(--success-color);
+    border-color: color-mix(in srgb, var(--success-color), transparent 55%);
+    background-color: color-mix(in srgb, var(--success-color), transparent 88%);
+}
+
+.status-unknown {
+    color: var(--subtext-color);
+}

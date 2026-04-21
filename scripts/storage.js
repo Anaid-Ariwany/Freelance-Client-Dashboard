@@ -99,29 +99,81 @@ function updatePayment(paymentId, updatedPayment) {
 
 
 /* handle add client form submissions */
-const form = document.querySelector('#clientForm');
-const formModal = document.querySelector('#clientFormModal');
-const modal = new bootstrap.Modal(formModal);
+const clientForm = document.querySelector('#clientForm');
+const clientFormModal = document.querySelector('#clientFormModal');
 
-form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const clientId = form.getAttribute('data-id');
-    const clientData = {
-        id: clientId || Date.now().toString(),
-        name: document.querySelector('#clientName').value,
-        email: document.querySelector('#clientEmail').value,
-        company: document.querySelector('#clientCompany').value,
-        notes: document.querySelector('#clientNotes').value
-    };
-    if (clientId) {
-        updateClient(clientId, clientData);
-    }
-    else {
-        addClient(clientData);
-    }
-    renderClients();
-    form.reset();
-    modal.hide();
-});
+if (clientForm && clientFormModal) {
+    const modal = new bootstrap.Modal(clientFormModal);
+
+    clientForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const clientId = clientForm.getAttribute('data-id');
+        const clientData = {
+            id: clientId || Date.now().toString(),
+            name: document.querySelector('#clientName')?.value || '',
+            email: document.querySelector('#clientEmail')?.value || '',
+            company: document.querySelector('#clientCompany')?.value || '',
+            notes: document.querySelector('#clientNotes')?.value || ''
+        };
+        if (clientId) {
+            updateClient(clientId, clientData);
+        }
+        else {
+            addClient(clientData);
+        }
+        if (typeof renderClients === 'function') {
+            renderClients();
+        }
+        clientForm.reset();
+        modal.hide();
+    });
+}
+
+
+/* handle add project form submissions */
+const projectForm = document.querySelector('#projectForm');
+const projectFormModal = document.querySelector('#projectFormModal');
+
+if (projectForm && projectFormModal) {
+    const modal = new bootstrap.Modal(projectFormModal);
+
+    projectForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const projectId = projectForm.getAttribute('data-id');
+
+        const clientId = document.querySelector('#clientNameSelect')?.value || '';
+        const clients = getData('clients');
+        const client = clients.find(c => c.id === clientId);
+
+        const projectData = {
+            id: projectId || Date.now().toString(),
+            name: document.querySelector('#projectName')?.value || '',
+            clientId,
+            clientName: client?.name || '',
+            clientCompany: client?.company || '',
+            status: document.querySelector('#status')?.value || '',
+            deadline: document.querySelector('#deadline')?.value || '',
+            budget: Number(document.querySelector('#budget')?.value || 0),
+        };
+
+        if (projectId) {
+            updateProject(projectId, projectData);
+        } else {
+            addProject(projectData);
+        }
+
+        if (typeof renderProjects === 'function') {
+            renderProjects();
+        }
+
+        projectForm.reset();
+        projectForm.removeAttribute('data-id');
+
+        const submitBtn = document.getElementById('formSubmitButton');
+        if (submitBtn) submitBtn.textContent = 'Add Project';
+
+        modal.hide();
+    });
+}
 
 

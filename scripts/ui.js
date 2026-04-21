@@ -5,6 +5,8 @@ function renderClients() {
     const clients = getData('clients');
     const clientList = document.getElementById('clientList');
 
+    if (!clientList) return;
+
     clientList.innerHTML = '';
 
     clients.forEach(client => {
@@ -25,10 +27,13 @@ function renderClients() {
     });
 }
 
-renderClients();
+if (document.getElementById('clientList')) {
+    renderClients();
+}
 
 /* handle edit and delete button */
-document.getElementById('clientList').addEventListener('click', (e) => {
+const clientListEl = document.getElementById('clientList');
+if (clientListEl) clientListEl.addEventListener('click', (e) => {
     if (e.target.classList.contains('edit-btn')) {
         const clientId = e.target.getAttribute('data-id');
         const client = getData('clients').find(c => c.id === clientId);
@@ -37,14 +42,16 @@ document.getElementById('clientList').addEventListener('click', (e) => {
         document.getElementById('clientCompany').value = client.company;
         document.getElementById('clientNotes').value = client.notes;
         document.getElementById('formSubmitButton').textContent = 'Update Client';
-        form.setAttribute('data-id', clientId);
+        if (typeof form !== 'undefined' && form) form.setAttribute('data-id', clientId);
         const modal = new bootstrap.Modal(document.getElementById('clientFormModal'));
         modal.show();
 
         /* close modal on submit */
-        form.addEventListener('submit', () => {
-            modal.hide();
-        });
+        if (typeof form !== 'undefined' && form) {
+            form.addEventListener('submit', () => {
+                modal.hide();
+            });
+        }
     } else if (e.target.classList.contains('delete-btn')) {
         clientToDelete = e.target.getAttribute('data-id');
 
@@ -55,7 +62,7 @@ document.getElementById('clientList').addEventListener('click', (e) => {
 
 const confirmDeleteBtn = document.getElementById('confirmDeleteButton');
 
-confirmDeleteBtn.addEventListener('click', () => {
+if (confirmDeleteBtn) confirmDeleteBtn.addEventListener('click', () => {
     if (clientToDelete) {
         deleteClient(clientToDelete);
         renderClients();
@@ -66,3 +73,56 @@ confirmDeleteBtn.addEventListener('click', () => {
     const modalInstance = bootstrap.Modal.getInstance(modalEl);
     modalInstance.hide();
 });
+
+
+//function to render the projects
+/* projects */
+function renderProjects() {
+    const projectList = document.getElementById('projectList');
+    if (!projectList) return;
+
+    const projects = getData('projects');
+    const clients = getData('clients');
+
+    projectList.innerHTML = '';
+
+    projects.forEach(project => {
+        const client = clients.find(c => c.id === project.clientId);
+        const clientLabel =
+            client
+                ? (client.company ? `${client.name} — ${client.company}` : client.name)
+                : (project.clientName || 'Unknown client');
+
+        const status = project.status || '';
+        const statusClass =
+            status === 'Completed' ? 'status-completed'
+                : status === 'In Progress' ? 'status-in-progress'
+                    : status === 'Not Started' ? 'status-not-started'
+                        : 'status-unknown';
+
+        const budgetNumber = Number(project.budget || 0);
+        const budgetLabel = Number.isFinite(budgetNumber)
+            ? new Intl.NumberFormat('en-KE', { style: 'currency', currency: 'KES' }).format(budgetNumber)
+            : '';
+
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${project.name || ''}</td>
+            <td>${clientLabel}</td>
+            <td><span class="status-pill ${statusClass}">${status}</span></td>
+            <td>${project.deadline || ''}</td>
+            <td>${budgetLabel}</td>
+            <td class="actions-cell">
+                <button class="edit-project-btn" data-id="${project.id}">Edit</button>
+                <button class="delete-project-btn" data-id="${project.id}">Delete</button>
+            </td>
+        `;
+
+        projectList.appendChild(row);
+    });
+}
+
+if (document.getElementById('projectList')) {
+    renderProjects();
+}
+
