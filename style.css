@@ -129,6 +129,16 @@ body {
     font-weight: var(--text-font-weight);
     background-color: var(--background-color);
     color: var(--text-color);
+    overflow-x: hidden;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+.appLayout {
+    min-height: 100vh;
 }
 
 
@@ -137,8 +147,9 @@ body {
     background-color: var(--sidebar-bg);
     color: var(--sidebar-text);
     min-height: 100vh;
-    padding: 1rem;
-    padding: 2rem 1.5rem;
+    padding: clamp(1rem, 2vw, 2rem) clamp(0.9rem, 2vw, 1.5rem);
+    display: flex;
+    flex-direction: column;
 }
 
 .sidebar div {
@@ -149,13 +160,13 @@ body {
 }
 
 .logo {
-    width: 18rem;
+    width: min(100%, 18rem);
     height: auto;
 }
 
 .sidebarIcon {
-    width: 2rem;
-    height: 2rem;
+    width: clamp(1.4rem, 4vw, 2rem);
+    height: clamp(1.4rem, 4vw, 2rem);
 }
 
 .logoDiv {
@@ -171,7 +182,7 @@ body {
 }
 
 .logoutDiv {
-    margin-top: 12rem;
+    margin-top: auto;
     border-top: 2px solid color-mix(in srgb, var(--border-color), transparent 80%);
     padding-top: 1rem;
 }
@@ -179,8 +190,9 @@ body {
 div a {
     color: var(--sidebar-text);
     text-decoration: none;
-    font-size: var(--heading-font-size);
+    font-size: clamp(1rem, 2vw, var(--heading-font-size));
     font-weight: var(--heading-font-weight);
+    word-break: break-word;
 }
 
 div h4:hover {
@@ -191,7 +203,8 @@ div h4:hover {
 
 /* ##### right section styling ##### */
 .rightSection {
-    padding: 2rem;
+    padding: clamp(1rem, 2.5vw, 2rem);
+    min-width: 0;
 }
 
 .rightSection h1 {
@@ -200,6 +213,8 @@ div h4:hover {
     border-bottom: 2px solid color-mix(in srgb, var(--border-color), transparent 20%);
     padding-bottom: 1rem;
     margin-bottom: 2rem;
+    font-size: clamp(1.45rem, 3vw, 2.2rem);
+    line-height: 1.2;
 }
 
 /* ##### dashboard ##### */
@@ -289,6 +304,7 @@ div h4:hover {
 .panelHeaderActions {
     display: flex;
     gap: 0.5rem;
+    flex-wrap: wrap;
 }
 
 .panelNavBtn {
@@ -364,6 +380,7 @@ div h4:hover {
     justify-content: space-between;
     padding: 0.75rem 0.9rem;
     font-weight: var(--heading-font-weight);
+    gap: 0.75rem;
 }
 
 .acSectionHeader .panelHeaderActions {
@@ -451,7 +468,7 @@ div h4:hover {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 22rem;
+    max-width: min(22rem, 100%);
 }
 
 .acSub {
@@ -460,7 +477,7 @@ div h4:hover {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 22rem;
+    max-width: min(22rem, 100%);
 }
 
 .acRight {
@@ -671,5 +688,113 @@ div h4:hover {
 @media (max-width: 992px) {
     .metricCards {
         grid-template-columns: 1fr;
+    }
+
+    .acHeader,
+    .panelHeaderRow,
+    .acSectionHeader,
+    .activityItem,
+    .acRow {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .acRight,
+    .activityTime {
+        width: 100%;
+    }
+
+    .acRight {
+        flex-wrap: wrap;
+    }
+
+    .activityTime {
+        text-align: left;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .sidebar {
+        min-height: auto;
+    }
+
+    .logoDiv,
+    .projectsH4 {
+        padding-bottom: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .sidebar div {
+        gap: 0.75rem;
+    }
+
+    .sidebar h4 {
+        margin: 0;
+        padding: 0.45rem 0.35rem;
+    }
+
+    .rightSection h1 {
+        margin-bottom: 1.25rem;
+        padding-bottom: 0.75rem;
+    }
+
+    .dashboardPanel,
+    .dashboardActionCenter {
+        padding: 0.9rem;
+    }
+
+    .panelNavBtn,
+    .acQuickBtn {
+        width: 100%;
+    }
+
+    .acQuickBtns {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 420px) {
+    .rightSection,
+    .sidebar {
+        padding: 0.85rem;
+    }
+
+    .dashboardPanel,
+    .dashboardActionCenter {
+        border-radius: 0.65rem;
+    }
+
+    .metricCard,
+    .activityItem,
+    .acRow {
+        padding: 0.8rem;
+    }
+
+    .metricCard {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.85rem;
+    }
+
+    .acTitle,
+    .acSub,
+    .activityText .subject {
+        white-space: normal;
+    }
+
+    .acDate,
+    .acMeta,
+    .activityTime {
+        white-space: normal;
+    }
+}
+
+@media (min-width: 1400px) {
+    .rightSection {
+        padding: 2.5rem 3rem;
+    }
+
+    .metricCards {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 }
