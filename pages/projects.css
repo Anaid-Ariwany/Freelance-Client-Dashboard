@@ -112,3 +112,12 @@ td {
 .status-unknown {
     color: var(--subtext-color);
 }
+
+#projectSearchInput {
+    width: 50%;
+    padding: 0.5rem 1rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    font-size: var(--subheading-font-size);
+}

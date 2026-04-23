@@ -83,6 +83,9 @@ function renderProjects() {
     const projectList = document.getElementById('projectList');
     if (!projectList) return;
 
+    const searchInput = document.getElementById('projectSearchInput');
+    const query = (searchInput?.value || '').trim().toLowerCase();
+
     const projects = getData('projects');
     const clients = getData('clients');
 
@@ -107,6 +110,21 @@ function renderProjects() {
             ? new Intl.NumberFormat('en-KE', { style: 'currency', currency: 'KES' }).format(budgetNumber)
             : '';
 
+        if (query) {
+            const haystack = [
+                project.name,
+                clientLabel,
+                status,
+                project.deadline,
+                budgetLabel
+            ]
+                .filter(Boolean)
+                .join(' ')
+                .toLowerCase();
+
+            if (!haystack.includes(query)) return;
+        }
+
         const row = document.createElement('tr');
         row.innerHTML = `
             <td>${project.name || ''}</td>
@@ -126,6 +144,13 @@ function renderProjects() {
 
 if (document.getElementById('projectList')) {
     renderProjects();
+}
+
+const projectSearchInput = document.getElementById('projectSearchInput');
+if (projectSearchInput) {
+    projectSearchInput.addEventListener('input', () => {
+        renderProjects();
+    });
 }
 
 const projectListEl = document.getElementById('projectList');
