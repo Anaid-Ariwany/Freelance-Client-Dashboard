@@ -1,0 +1,257 @@
+.settingsPage {
+    min-height: 100vh;
+    padding: 2rem;
+    background:
+        radial-gradient(circle at top left, color-mix(in srgb, var(--color-primary), transparent 90%), transparent 35%),
+        linear-gradient(180deg, color-mix(in srgb, var(--background-color), white 6%), var(--background-color));
+}
+
+.settingsShell {
+    max-width: 980px;
+    margin: 0 auto;
+}
+
+.settingsCard {
+    background-color: var(--surface-color);
+    border: 1px solid color-mix(in srgb, var(--border-color), transparent 5%);
+    border-radius: 1.35rem;
+    box-shadow: 0 24px 60px rgba(15, 23, 42, 0.08);
+    padding: 2.75rem 3rem 2.5rem;
+}
+
+.settingsIntro {
+    margin-bottom: 3rem;
+}
+
+.settingsIntro h1 {
+    margin: 0 0 0.5rem;
+    font-size: clamp(2rem, 4vw, 2.5rem);
+    font-weight: 700;
+    color: var(--headings-color);
+}
+
+.settingsIntro p {
+    margin: 0;
+    font-size: 1.1rem;
+    color: var(--subtext-color);
+}
+
+.themeForm {
+    display: flex;
+    flex-direction: column;
+    gap: 3.5rem;
+}
+
+.themeFieldset {
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+.themeFieldset legend {
+    margin-bottom: 1.5rem;
+    font-size: 1.45rem;
+    font-weight: 600;
+    color: var(--headings-color);
+}
+
+.themeOptions {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.4rem;
+}
+
+.themeOption {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    cursor: pointer;
+}
+
+.themeOption input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.themePreview {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.72rem;
+    min-height: 108px;
+    padding: 1.15rem 1.3rem;
+    border: 2px solid color-mix(in srgb, var(--border-color), transparent 8%);
+    border-radius: 1.5rem;
+    background-color: #ffffff;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.themeOption input:checked + .themePreview {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary), transparent 85%);
+}
+
+.themeOption input:focus-visible + .themePreview {
+    outline: 3px solid color-mix(in srgb, var(--color-primary), transparent 78%);
+    outline-offset: 3px;
+}
+
+.themeOptionLabel {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--headings-color);
+}
+
+.previewTop,
+.previewLine,
+.previewAccent {
+    display: block;
+    border-radius: 999px;
+}
+
+.previewTop {
+    width: 0.8rem;
+    height: 0.8rem;
+    background-color: rgba(148, 163, 184, 0.35);
+}
+
+.previewLine {
+    height: 0.55rem;
+    background-color: rgba(148, 163, 184, 0.2);
+}
+
+.previewLineWide {
+    width: 55%;
+}
+
+.previewLineLong {
+    width: 88%;
+}
+
+.previewLineShort {
+    width: 62%;
+}
+
+.previewAccent {
+    width: 2rem;
+    height: 0.62rem;
+    background-color: var(--color-primary-light);
+}
+
+.darkPreview {
+    background-color: #1f1f1f;
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+.darkPreview .previewTop {
+    background-color: rgba(255, 255, 255, 0.12);
+}
+
+.darkPreview .previewLine {
+    background-color: rgba(255, 255, 255, 0.12);
+}
+
+.autoPreview {
+    flex-direction: row;
+    gap: 0;
+    overflow: hidden;
+    padding: 0;
+}
+
+.previewPane {
+    flex: 1 1 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.72rem;
+    padding: 1.15rem 1.3rem;
+}
+
+.previewPaneLight {
+    background-color: #ffffff;
+}
+
+.previewPaneDark {
+    background-color: #1f1f1f;
+    border-left: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.previewPaneDark .previewTop {
+    background-color: rgba(255, 255, 255, 0.12);
+}
+
+.previewPaneDark .previewLine {
+    background-color: rgba(255, 255, 255, 0.12);
+}
+
+.settingsActions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 4.5rem;
+}
+
+.settingsBtn {
+    min-width: 150px;
+    border-radius: 1rem;
+    padding: 0.95rem 1.4rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border: 1px solid transparent;
+}
+
+.settingsBtnSecondary {
+    background-color: transparent;
+    color: var(--headings-color);
+    border-color: color-mix(in srgb, var(--border-color), transparent 0%);
+}
+
+.settingsBtnPrimary {
+    background-color: var(--color-primary);
+    color: #ffffff;
+    box-shadow: 0 16px 30px color-mix(in srgb, var(--color-primary), transparent 72%);
+}
+
+.settingsBtnPrimary:hover,
+.settingsBtnPrimary:focus-visible {
+    background-color: var(--color-primary-light);
+}
+
+.settingsBtnSecondary:hover,
+.settingsBtnSecondary:focus-visible {
+    background-color: color-mix(in srgb, var(--surface-color), var(--color-primary) 8%);
+}
+
+html.dark .settingsPage {
+    background:
+        radial-gradient(circle at top left, color-mix(in srgb, var(--color-primary), transparent 82%), transparent 32%),
+        linear-gradient(180deg, color-mix(in srgb, var(--background-color), black 2%), var(--background-color));
+}
+
+html.dark .settingsCard {
+    box-shadow: 0 24px 60px rgba(2, 6, 23, 0.42);
+}
+
+@media (max-width: 991px) {
+    .settingsPage {
+        padding: 1.25rem;
+    }
+
+    .settingsCard {
+        padding: 2rem 1.4rem 1.8rem;
+    }
+
+    .themeOptions {
+        grid-template-columns: 1fr;
+    }
+
+    .settingsActions {
+        margin-top: 2rem;
+        flex-direction: column-reverse;
+    }
+
+    .settingsBtn {
+        width: 100%;
+    }
+}

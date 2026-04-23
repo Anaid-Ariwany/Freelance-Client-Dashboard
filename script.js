@@ -1,37 +1,75 @@
 /* Theme Toggle functions */
-const toggleBtn = document.getElementById("theme-toggle");
-const savedTheme = localStorage.getItem("theme");
+const toggleBtn = document.getElementById('theme-toggle');
+const themeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
 
-if (savedTheme === "dark") {
-    document.documentElement.classList.add("dark");
-} else if (savedTheme === "light") {
-    document.documentElement.classList.remove("dark");
-} else {
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    document.documentElement.classList.toggle("dark", prefersDark);
+function getStoredThemePreference() {
+    const savedTheme = localStorage.getItem('theme');
+    return savedTheme === 'dark' || savedTheme === 'light' || savedTheme === 'auto'
+        ? savedTheme
+        : 'auto';
+}
+
+function getResolvedTheme(preference = getStoredThemePreference()) {
+    if (preference === 'dark') return 'dark';
+    if (preference === 'light') return 'light';
+    return themeMediaQuery.matches ? 'dark' : 'light';
 }
 
 function updateIcon() {
     if (!toggleBtn) return;
-    toggleBtn.textContent = document.documentElement.classList.contains("dark")
-        ? "☀️"
-        : "🌙";
+
+    const preference = getStoredThemePreference();
+    const resolvedTheme = getResolvedTheme(preference);
+
+    if (preference === 'auto') {
+        toggleBtn.textContent = resolvedTheme === 'dark' ? 'Auto: Dark' : 'Auto: Light';
+        return;
+    }
+
+    toggleBtn.textContent = resolvedTheme === 'dark' ? 'Light mode' : 'Dark mode';
 }
 
-updateIcon();
+function applyThemePreference(preference = getStoredThemePreference()) {
+    document.documentElement.classList.toggle('dark', getResolvedTheme(preference) === 'dark');
+    updateIcon();
+}
+
+window.applyThemePreference = applyThemePreference;
+
+applyThemePreference();
 
 if (toggleBtn) {
-    toggleBtn.addEventListener("click", () => {
-        const isDark = document.documentElement.classList.toggle("dark");
-        localStorage.setItem("theme", isDark ? "dark" : "light");
-        updateIcon();
+    toggleBtn.addEventListener('click', () => {
+        const nextPreference = getResolvedTheme() === 'dark' ? 'light' : 'dark';
+        localStorage.setItem('theme', nextPreference);
+        applyThemePreference(nextPreference);
     });
 }
 
+if (typeof themeMediaQuery.addEventListener === 'function') {
+    themeMediaQuery.addEventListener('change', () => {
+        if (getStoredThemePreference() === 'auto') {
+            applyThemePreference('auto');
+        }
+    });
+} else if (typeof themeMediaQuery.addListener === 'function') {
+    themeMediaQuery.addListener(() => {
+        if (getStoredThemePreference() === 'auto') {
+            applyThemePreference('auto');
+        }
+    });
+}
+
+window.addEventListener('storage', (event) => {
+    if (event.key === 'theme') {
+        applyThemePreference(getStoredThemePreference());
+    }
+});
+
 
 /* client form modal */
-const addClientBtn = document.querySelector(".addClientButton");
-const clientModal = document.querySelector("#clientFormModal");
+const addClientBtn = document.querySelector('.addClientButton');
+const clientModal = document.querySelector('#clientFormModal');
 
 if (addClientBtn && clientModal) {
     addClientBtn.addEventListener('shown.bs.modal', () => {
@@ -41,8 +79,8 @@ if (addClientBtn && clientModal) {
 
 
 /* project form modal */
-const addProjectBtn = document.querySelector(".addProjectButton");
-const projectModal = document.querySelector("#projectFormModal");
+const addProjectBtn = document.querySelector('.addProjectButton');
+const projectModal = document.querySelector('#projectFormModal');
 
 function populateClientNameSelect() {
     const select = document.getElementById('clientNameSelect');
@@ -76,7 +114,7 @@ function populateClientNameSelect() {
     clients.forEach((client) => {
         const opt = document.createElement('option');
         opt.value = client.id;
-        opt.textContent = client.company ? `${client.name} — ${client.company}` : client.name;
+        opt.textContent = client.company ? `${client.name} - ${client.company}` : client.name;
         select.appendChild(opt);
     });
 }
@@ -95,9 +133,3 @@ if (projectModal) {
 document.addEventListener('DOMContentLoaded', () => {
     populateClientNameSelect();
 });
-
-
-
-
-
-
