@@ -278,9 +278,11 @@ function renderDashboard() {
 
     const totalClients = clients.length;
     const activeProjects = projects.filter(p => (p.status || '') === 'In Progress').length;
-    const totalEarnings = payments.reduce((sum, p) => {
-        const amount = Number(p.amount ?? p.budget ?? 0);
-        return sum + (Number.isFinite(amount) ? amount : 0);
+    const totalEarnings = projects
+        .filter(p => (p.status || '') === 'Completed')
+        .reduce((sum, p) => {
+            const budget = Number(p.budget ?? 0);
+            return sum + (Number.isFinite(budget) ? budget : 0);
     }, 0);
 
     if (metricCardsEl) {
