@@ -409,6 +409,7 @@ function renderDashboard() {
         if (activityPageIndex < 0) activityPageIndex = 0;
 
         const maxPage = Math.max(0, Math.ceil(all.length / ACTIVITY_PAGE_SIZE) - 1);
+        const totalPages = Math.max(1, maxPage + 1);
         if (activityPageIndex > maxPage) activityPageIndex = maxPage;
 
         const start = activityPageIndex * ACTIVITY_PAGE_SIZE;
@@ -416,8 +417,15 @@ function renderDashboard() {
 
         const prevBtn = document.getElementById('activityPrevBtn');
         const nextBtn = document.getElementById('activityNextBtn');
-        if (prevBtn) prevBtn.disabled = activityPageIndex <= 0;
-        if (nextBtn) nextBtn.disabled = activityPageIndex >= maxPage;
+        const pageLabel = `${activityPageIndex + 1} of ${totalPages}`;
+        if (prevBtn) {
+            prevBtn.disabled = activityPageIndex <= 0;
+            prevBtn.textContent = `Prev ${pageLabel}`;
+        }
+        if (nextBtn) {
+            nextBtn.disabled = activityPageIndex >= maxPage;
+            nextBtn.textContent = `Next ${pageLabel}`;
+        }
 
         if (page.length === 0) {
             activityEl.innerHTML = `<div class="activityItem"><div class="activityLeft"><span class="activityDot"></span><div class="activityText"><span class="subject">No activity yet</span></div></div><div class="activityTime"></div></div>`;
