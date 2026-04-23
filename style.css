@@ -366,6 +366,12 @@ div h4:hover {
     font-weight: var(--heading-font-weight);
 }
 
+.acSectionHeader .panelHeaderActions {
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
 .acSectionTitle {
     display: flex;
     align-items: center;

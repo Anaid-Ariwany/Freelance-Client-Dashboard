@@ -251,6 +251,12 @@ function daysBetween(a, b) {
     return Math.round(ms / (1000 * 60 * 60 * 24));
 }
 
+const actionCenterPageIndexes = {
+    overdue: 0,
+    due: 0,
+    unpaid: 0
+};
+
 function renderActionCenter() {
     const root = document.getElementById('dashboardActionCenter');
     if (!root) return;
@@ -310,20 +316,37 @@ function renderActionCenter() {
         `;
     };
 
-    const sectionHtml = (title, variant, count, items, emptyText) => `
+    const sectionHtml = (title, variant, items, emptyText) => {
+        const maxPage = Math.max(0, items.length - 1);
+        const totalPages = Math.max(1, maxPage + 1);
+        const currentPage = Math.min(Math.max(actionCenterPageIndexes[variant] ?? 0, 0), maxPage);
+        actionCenterPageIndexes[variant] = currentPage;
+        const currentItem = items.slice(currentPage, currentPage + 1);
+        const pageLabel = `${currentPage + 1} of ${totalPages}`;
+
+        return `
         <div class="acSection acSection-${variant}">
             <div class="acSectionHeader">
                 <div class="acSectionTitle">
                     <span class="acSectionDot ${variant}"></span>
                     <span>${title}</span>
                 </div>
-                <div class="acCount">${count}</div>
+                <div class="panelHeaderActions">
+                    <div class="acCount">${items.length}</div>
+                    <button type="button" class="panelNavBtn" data-ac-nav="${variant}" data-direction="prev" aria-label="Previous ${title}">
+                        Prev ${pageLabel}
+                    </button>
+                    <button type="button" class="panelNavBtn" data-ac-nav="${variant}" data-direction="next" aria-label="Next ${title}">
+                        Next ${pageLabel}
+                    </button>
+                </div>
             </div>
             <div class="acSectionBody">
-                ${items.length ? items.map(p => itemHtml(p, variant)).join('') : `<div class="acEmpty">${emptyText}</div>`}
+                ${currentItem.length ? currentItem.map(p => itemHtml(p, variant)).join('') : `<div class="acEmpty">${emptyText}</div>`}
             </div>
         </div>
     `;
+    };
 
     root.innerHTML = `
         <div class="acHeader">
@@ -334,9 +357,9 @@ function renderActionCenter() {
             <div class="acDate">${headerDate}</div>
         </div>
 
-        ${sectionHtml('Overdue Projects', 'overdue', overdue.length, overdue.slice(0, 4), 'No overdue projects')}
-        ${sectionHtml('Due Soon (Next 7 Days)', 'due', dueSoon.length, dueSoon.slice(0, 4), 'Nothing due in the next 7 days')}
-        ${sectionHtml('Unpaid Payments', 'unpaid', unpaid.length, unpaid.slice(0, 4), 'No unpaid projects')}
+        ${sectionHtml('Overdue Projects', 'overdue', overdue, 'No overdue projects')}
+        ${sectionHtml('Due Soon (Next 7 Days)', 'due', dueSoon, 'Nothing due in the next 7 days')}
+        ${sectionHtml('Unpaid Payments', 'unpaid', unpaid, 'No unpaid projects')}
 
         <div class="acQuickActions">
             <div class="acQuickLabel">Quick Actions</div>
@@ -353,6 +376,29 @@ function renderActionCenter() {
         btn.addEventListener('click', () => {
             const to = btn.getAttribute('data-go');
             if (to) window.location.href = to;
+        });
+    });
+
+    root.querySelectorAll('[data-ac-nav]').forEach(btn => {
+        const variant = btn.getAttribute('data-ac-nav');
+        const direction = btn.getAttribute('data-direction');
+        const collections = {
+            overdue,
+            due: dueSoon,
+            unpaid
+        };
+        const maxPage = Math.max(0, (collections[variant]?.length || 0) - 1);
+
+        btn.disabled = direction === 'prev'
+            ? actionCenterPageIndexes[variant] <= 0
+            : actionCenterPageIndexes[variant] >= maxPage;
+
+        btn.addEventListener('click', () => {
+            const current = actionCenterPageIndexes[variant] ?? 0;
+            actionCenterPageIndexes[variant] = direction === 'prev'
+                ? Math.max(0, current - 1)
+                : Math.min(maxPage, current + 1);
+            renderActionCenter();
         });
     });
 }
