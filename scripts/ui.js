@@ -234,6 +234,129 @@ function formatTimeAgo(iso) {
 
 // Earnings Overview chart removed (null and void).
 
+function formatDateLong(dateLike) {
+    const d = dateLike ? new Date(dateLike) : null;
+    if (!d || Number.isNaN(d.getTime())) return '';
+    return d.toLocaleDateString('en-KE', { month: 'short', day: 'numeric', year: 'numeric' });
+}
+
+function startOfToday() {
+    const d = new Date();
+    d.setHours(0, 0, 0, 0);
+    return d;
+}
+
+function daysBetween(a, b) {
+    const ms = b.getTime() - a.getTime();
+    return Math.round(ms / (1000 * 60 * 60 * 24));
+}
+
+function renderActionCenter() {
+    const root = document.getElementById('dashboardActionCenter');
+    if (!root) return;
+
+    const today = startOfToday();
+    const clients = getData('clients');
+    const projects = getData('projects');
+    const clientById = new Map(clients.map(c => [c.id, c]));
+
+    const unpaid = projects
+        .filter(p => (p.status || '') !== 'Completed')
+        .map(p => {
+            const deadline = p.deadline ? new Date(p.deadline) : null;
+            return { ...p, _deadline: deadline };
+        })
+        .filter(p => p._deadline && !Number.isNaN(p._deadline.getTime()))
+        .sort((a, b) => a._deadline - b._deadline);
+
+    const overdue = unpaid.filter(p => p._deadline < today);
+    const dueSoon = unpaid.filter(p => {
+        const diff = daysBetween(today, p._deadline);
+        return diff >= 0 && diff <= 7;
+    });
+
+    const headerDate = new Date().toLocaleDateString('en-KE', { month: 'long', day: 'numeric', year: 'numeric' });
+
+    const itemHtml = (p, variant) => {
+        const c = clientById.get(p.clientId);
+        const company = c?.company || p.clientCompany || '';
+        const due = formatDateLong(p.deadline);
+        const diff = daysBetween(today, p._deadline);
+
+        const rightMeta = variant === 'unpaid'
+            ? `<div class="acAmount">${formatKES(p.budget || 0)}</div><div class="acMeta">${due ? `Due: ${due}` : ''}</div>`
+            : `<div class="acMeta">${due ? `Due: ${due}` : ''}</div>`;
+
+        const pill = variant === 'unpaid'
+            ? `<span class="acPill acPillUnpaid">Unpaid</span>`
+            : (diff < 0
+                ? `<span class="acPill acPillOverdue">${Math.abs(diff)} day${Math.abs(diff) === 1 ? '' : 's'} overdue</span>`
+                : `<span class="acPill acPillDue">In ${diff} day${diff === 1 ? '' : 's'}</span>`);
+
+        return `
+            <div class="acRow">
+                <div class="acLeft">
+                    <div class="acIcon ${variant}"></div>
+                    <div class="acTitles">
+                        <div class="acTitle">${p.name || ''}</div>
+                        <div class="acSub">${company || '—'}</div>
+                    </div>
+                </div>
+                <div class="acRight">
+                    ${rightMeta}
+                    ${pill}
+                </div>
+            </div>
+        `;
+    };
+
+    const sectionHtml = (title, variant, count, items, emptyText) => `
+        <div class="acSection acSection-${variant}">
+            <div class="acSectionHeader">
+                <div class="acSectionTitle">
+                    <span class="acSectionDot ${variant}"></span>
+                    <span>${title}</span>
+                </div>
+                <div class="acCount">${count}</div>
+            </div>
+            <div class="acSectionBody">
+                ${items.length ? items.map(p => itemHtml(p, variant)).join('') : `<div class="acEmpty">${emptyText}</div>`}
+            </div>
+        </div>
+    `;
+
+    root.innerHTML = `
+        <div class="acHeader">
+            <div>
+                <div class="acHeading">Today's Action Center</div>
+                <div class="acSubheading">Important items that need your attention</div>
+            </div>
+            <div class="acDate">${headerDate}</div>
+        </div>
+
+        ${sectionHtml('Overdue Projects', 'overdue', overdue.length, overdue.slice(0, 4), 'No overdue projects')}
+        ${sectionHtml('Due Soon (Next 7 Days)', 'due', dueSoon.length, dueSoon.slice(0, 4), 'Nothing due in the next 7 days')}
+        ${sectionHtml('Unpaid Payments', 'unpaid', unpaid.length, unpaid.slice(0, 4), 'No unpaid projects')}
+
+        <div class="acQuickActions">
+            <div class="acQuickLabel">Quick Actions</div>
+            <div class="acQuickBtns">
+                <button type="button" class="acQuickBtn" data-go="pages/projects.html">Add Project</button>
+                <button type="button" class="acQuickBtn" data-go="pages/clients.html">Add Client</button>
+                <button type="button" class="acQuickBtn" data-go="pages/projects.html">Record Payment</button>
+                <button type="button" class="acQuickBtn" data-go="pages/projects.html">View Reports</button>
+            </div>
+        </div>
+    `;
+
+    root.querySelectorAll('[data-go]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const to = btn.getAttribute('data-go');
+            if (to) window.location.href = to;
+        });
+    });
+}
+
 function renderDashboard() {
     const metricCardsEl = document.getElementById('metricCards');
     const activityEl = document.getElementById('recentActivity');
@@ -310,3 +433,4 @@ function renderDashboard() {
 }
 
 renderDashboard();
+renderActionCenter();

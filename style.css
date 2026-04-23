@@ -274,6 +274,286 @@ div h4:hover {
     margin: 0 0 0.75rem;
 }
 
+/* ##### action center ##### */
+.dashboardActionCenter {
+    background-color: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: 0.75rem;
+    padding: 1rem 1.25rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+    margin-top: 1.25rem;
+}
+
+.acHeader {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid color-mix(in srgb, var(--border-color), transparent 30%);
+    margin-bottom: 0.75rem;
+}
+
+.acHeading {
+    font-size: 1.25rem;
+    font-weight: var(--heading-font-weight);
+    color: var(--headings-color);
+}
+
+.acSubheading {
+    color: var(--subtext-color);
+    font-size: 0.95rem;
+    margin-top: 0.15rem;
+}
+
+.acDate {
+    color: var(--subtext-color);
+    font-size: 0.95rem;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.acSection {
+    border: 1px solid color-mix(in srgb, var(--border-color), transparent 25%);
+    border-radius: 0.75rem;
+    overflow: hidden;
+    margin-top: 0.75rem;
+}
+
+.acSectionHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 0.9rem;
+    font-weight: var(--heading-font-weight);
+}
+
+.acSectionTitle {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.acSectionDot {
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 999px;
+    flex: 0 0 auto;
+}
+
+.acCount {
+    min-width: 2rem;
+    height: 1.6rem;
+    padding: 0 0.55rem;
+    border-radius: 0.6rem;
+    display: grid;
+    place-items: center;
+    font-size: 0.9rem;
+    border: 1px solid color-mix(in srgb, var(--border-color), transparent 35%);
+    background-color: color-mix(in srgb, var(--surface-color), transparent 10%);
+}
+
+.acSectionBody {
+    background-color: color-mix(in srgb, var(--surface-color), transparent 8%);
+}
+
+.acRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.75rem 0.9rem;
+    border-top: 1px solid color-mix(in srgb, var(--border-color), transparent 35%);
+}
+
+.acLeft {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-width: 0;
+}
+
+.acIcon {
+    width: 2.2rem;
+    height: 2.2rem;
+    border-radius: 0.6rem;
+    flex: 0 0 auto;
+    background-color: color-mix(in srgb, var(--labels-color), transparent 80%);
+    border: 1px solid color-mix(in srgb, var(--border-color), transparent 35%);
+}
+
+.acIcon.overdue {
+    background-color: color-mix(in srgb, var(--danger-color), transparent 88%);
+    border-color: color-mix(in srgb, var(--danger-color), transparent 65%);
+}
+
+.acIcon.due {
+    background-color: color-mix(in srgb, var(--warning-color), transparent 88%);
+    border-color: color-mix(in srgb, var(--warning-color), transparent 65%);
+}
+
+.acIcon.unpaid {
+    background-color: color-mix(in srgb, var(--success-color), transparent 90%);
+    border-color: color-mix(in srgb, var(--success-color), transparent 70%);
+}
+
+.acTitles {
+    min-width: 0;
+}
+
+.acTitle {
+    color: var(--text-color);
+    font-weight: var(--heading-font-weight);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 22rem;
+}
+
+.acSub {
+    color: var(--subtext-color);
+    font-size: 0.95rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 22rem;
+}
+
+.acRight {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex: 0 0 auto;
+}
+
+.acAmount {
+    color: var(--success-color);
+    font-weight: var(--heading-font-weight);
+    white-space: nowrap;
+}
+
+.acMeta {
+    color: var(--subtext-color);
+    font-size: 0.95rem;
+    white-space: nowrap;
+}
+
+.acPill {
+    font-size: 0.85rem;
+    font-weight: var(--heading-font-weight);
+    padding: 0.25rem 0.6rem;
+    border-radius: 0.55rem;
+    border: 1px solid color-mix(in srgb, var(--border-color), transparent 40%);
+    white-space: nowrap;
+}
+
+.acPillOverdue {
+    color: var(--danger-color);
+    background-color: color-mix(in srgb, var(--danger-color), transparent 90%);
+    border-color: color-mix(in srgb, var(--danger-color), transparent 65%);
+}
+
+.acPillDue {
+    color: var(--warning-color);
+    background-color: color-mix(in srgb, var(--warning-color), transparent 90%);
+    border-color: color-mix(in srgb, var(--warning-color), transparent 65%);
+}
+
+.acPillUnpaid {
+    color: var(--success-color);
+    background-color: color-mix(in srgb, var(--success-color), transparent 92%);
+    border-color: color-mix(in srgb, var(--success-color), transparent 70%);
+}
+
+.acSection-overdue .acSectionHeader {
+    background-color: color-mix(in srgb, var(--danger-color), transparent 93%);
+}
+
+.acSection-overdue .acSectionDot {
+    background-color: var(--danger-color);
+}
+
+.acSection-due .acSectionHeader {
+    background-color: color-mix(in srgb, var(--warning-color), transparent 93%);
+}
+
+.acSection-due .acSectionDot {
+    background-color: var(--warning-color);
+}
+
+.acSection-unpaid .acSectionHeader {
+    background-color: color-mix(in srgb, var(--success-color), transparent 94%);
+}
+
+.acSection-unpaid .acSectionDot {
+    background-color: var(--success-color);
+}
+
+.acEmpty {
+    padding: 0.75rem 0.9rem;
+    color: var(--subtext-color);
+    font-size: 0.95rem;
+}
+
+.acQuickActions {
+    margin-top: 0.9rem;
+    border: 1px solid color-mix(in srgb, var(--border-color), transparent 25%);
+    border-radius: 0.75rem;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+}
+
+.acQuickLabel {
+    padding: 0.75rem 0.9rem;
+    font-weight: var(--heading-font-weight);
+    color: var(--color-primary);
+    background-color: color-mix(in srgb, var(--color-primary), transparent 94%);
+    min-width: 10rem;
+}
+
+.acQuickBtns {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.75rem;
+    padding: 0.75rem 0.9rem;
+    width: 100%;
+}
+
+.acQuickBtn {
+    background-color: color-mix(in srgb, var(--surface-color), transparent 0%);
+    border: 1px solid color-mix(in srgb, var(--border-color), transparent 10%);
+    border-radius: 0.6rem;
+    padding: 0.6rem 0.75rem;
+    color: var(--color-primary);
+    font-weight: var(--heading-font-weight);
+}
+
+.acQuickBtn:hover {
+    background-color: color-mix(in srgb, var(--color-primary), transparent 92%);
+}
+
+@media (max-width: 992px) {
+    .acRight {
+        gap: 0.6rem;
+    }
+
+    .acQuickActions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .acQuickLabel {
+        min-width: unset;
+    }
+
+    .acQuickBtns {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
 .activityList {
     display: flex;
     flex-direction: column;
