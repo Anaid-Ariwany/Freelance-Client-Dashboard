@@ -1,6 +1,5 @@
 let clientToDelete = null;
 let projectToDelete = null;
-let earningsChart = null;
 
 //function to render clients
 function renderClients() {
@@ -233,47 +232,15 @@ function formatTimeAgo(iso) {
     return `${diffDay} day${diffDay === 1 ? '' : 's'} ago`;
 }
 
-function getLast6MonthsLabels() {
-    const labels = [];
-    const now = new Date();
-    for (let i = 5; i >= 0; i--) {
-        const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
-        labels.push(d.toLocaleString('en-KE', { month: 'short' }));
-    }
-    return labels;
-}
-
-function aggregatePaymentsLast6Months(payments) {
-    const now = new Date();
-    const buckets = new Map(); // key: YYYY-MM
-    for (let i = 5; i >= 0; i--) {
-        const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
-        const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
-        buckets.set(key, 0);
-    }
-
-    payments.forEach(p => {
-        const rawDate = p.date || p.createdAt || p.paidAt;
-        const dt = rawDate ? new Date(rawDate) : null;
-        if (!dt || Number.isNaN(dt.getTime())) return;
-        const key = `${dt.getFullYear()}-${String(dt.getMonth() + 1).padStart(2, '0')}`;
-        if (!buckets.has(key)) return;
-        const amount = Number(p.amount ?? p.budget ?? 0);
-        buckets.set(key, buckets.get(key) + (Number.isFinite(amount) ? amount : 0));
-    });
-
-    return Array.from(buckets.values());
-}
+// Earnings Overview chart removed (null and void).
 
 function renderDashboard() {
     const metricCardsEl = document.getElementById('metricCards');
-    const chartEl = document.getElementById('earningsChart');
     const activityEl = document.getElementById('recentActivity');
-    if (!metricCardsEl && !chartEl && !activityEl) return;
+    if (!metricCardsEl && !activityEl) return;
 
     const clients = getData('clients');
     const projects = getData('projects');
-    const payments = getData('payments');
     const activities = typeof getActivities === 'function' ? getActivities() : getData('activity');
 
     const totalClients = clients.length;
@@ -309,53 +276,6 @@ function renderDashboard() {
                 <div class="metricIcon warning" aria-hidden="true"></div>
             </div>
         `;
-    }
-
-    if (chartEl && typeof Chart !== 'undefined') {
-        const ctx = chartEl.getContext('2d');
-        const labels = getLast6MonthsLabels();
-        const data = aggregatePaymentsLast6Months(payments);
-
-        if (earningsChart) earningsChart.destroy();
-        earningsChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels,
-                datasets: [
-                    {
-                        label: 'Earnings',
-                        data,
-                        backgroundColor: 'rgba(37, 99, 235, 0.65)',
-                        borderRadius: 6,
-                        maxBarThickness: 34
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { display: false },
-                    tooltip: {
-                        callbacks: {
-                            label: (ctx2) => formatKES(ctx2.parsed.y)
-                        }
-                    }
-                },
-                scales: {
-                    x: { grid: { display: false } },
-                    y: {
-                        grid: { color: 'rgba(148, 163, 184, 0.2)' },
-                        ticks: {
-                            callback: (value) => {
-                                const v = Number(value);
-                                return Number.isFinite(v) ? `${Math.round(v / 1000)}k` : value;
-                            }
-                        }
-                    }
-                }
-            }
-        });
     }
 
     if (activityEl) {

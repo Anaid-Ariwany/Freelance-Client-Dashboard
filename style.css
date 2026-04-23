@@ -274,10 +274,6 @@ div h4:hover {
     margin: 0 0 0.75rem;
 }
 
-.chartContainer {
-    width: 100%;
-}
-
 .activityList {
     display: flex;
     flex-direction: column;
