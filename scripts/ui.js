@@ -357,6 +357,9 @@ function renderActionCenter() {
     });
 }
 
+let activityPageIndex = 0;
+const ACTIVITY_PAGE_SIZE = 3;
+
 function renderDashboard() {
     const metricCardsEl = document.getElementById('metricCards');
     const activityEl = document.getElementById('recentActivity');
@@ -402,15 +405,28 @@ function renderDashboard() {
     }
 
     if (activityEl) {
-        const top = (activities || []).slice(0, 6);
-        if (top.length === 0) {
+        const all = activities || [];
+        if (activityPageIndex < 0) activityPageIndex = 0;
+
+        const maxPage = Math.max(0, Math.ceil(all.length / ACTIVITY_PAGE_SIZE) - 1);
+        if (activityPageIndex > maxPage) activityPageIndex = maxPage;
+
+        const start = activityPageIndex * ACTIVITY_PAGE_SIZE;
+        const page = all.slice(start, start + ACTIVITY_PAGE_SIZE);
+
+        const prevBtn = document.getElementById('activityPrevBtn');
+        const nextBtn = document.getElementById('activityNextBtn');
+        if (prevBtn) prevBtn.disabled = activityPageIndex <= 0;
+        if (nextBtn) nextBtn.disabled = activityPageIndex >= maxPage;
+
+        if (page.length === 0) {
             activityEl.innerHTML = `<div class="activityItem"><div class="activityLeft"><span class="activityDot"></span><div class="activityText"><span class="subject">No activity yet</span></div></div><div class="activityTime"></div></div>`;
             return;
         }
 
         const typeToDot = (t) => t === 'payment' ? 'success' : t === 'project' ? 'primary' : 'warning';
 
-        activityEl.innerHTML = top.map(a => {
+        activityEl.innerHTML = page.map(a => {
             const dotClass = typeToDot(a.type);
             const subject = a.subject || 'Activity';
             const action = a.action || '';
@@ -434,3 +450,15 @@ function renderDashboard() {
 
 renderDashboard();
 renderActionCenter();
+
+const activityPrevBtn = document.getElementById('activityPrevBtn');
+if (activityPrevBtn) activityPrevBtn.addEventListener('click', () => {
+    activityPageIndex = Math.max(0, activityPageIndex - 1);
+    renderDashboard();
+});
+
+const activityNextBtn = document.getElementById('activityNextBtn');
+if (activityNextBtn) activityNextBtn.addEventListener('click', () => {
+    activityPageIndex += 1;
+    renderDashboard();
+});

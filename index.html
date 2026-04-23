@@ -105,7 +105,17 @@
 
             <!-- recent activity -->
             <section class="dashboardPanel">
-                <h2>Recent Activity</h2>
+                <div class="panelHeaderRow">
+                    <h2 class="panelHeaderTitle">Recent Activity</h2>
+                    <div class="panelHeaderActions">
+                        <button type="button" class="panelNavBtn" id="activityPrevBtn" aria-label="Previous activities">
+                            Prev
+                        </button>
+                        <button type="button" class="panelNavBtn" id="activityNextBtn" aria-label="Next activities">
+                            Next
+                        </button>
+                    </div>
+                </div>
                 <div class="activityList" id="recentActivity"></div>
             </section>
         </section>

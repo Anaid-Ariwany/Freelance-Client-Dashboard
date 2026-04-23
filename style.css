@@ -274,6 +274,42 @@ div h4:hover {
     margin: 0 0 0.75rem;
 }
 
+.panelHeaderRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+}
+
+.panelHeaderTitle {
+    margin: 0;
+}
+
+.panelHeaderActions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.panelNavBtn {
+    background-color: color-mix(in srgb, var(--surface-color), transparent 0%);
+    border: 1px solid color-mix(in srgb, var(--border-color), transparent 10%);
+    border-radius: 0.6rem;
+    padding: 0.4rem 0.7rem;
+    color: var(--color-primary);
+    font-weight: var(--heading-font-weight);
+    font-size: 0.95rem;
+}
+
+.panelNavBtn:hover {
+    background-color: color-mix(in srgb, var(--color-primary), transparent 92%);
+}
+
+.panelNavBtn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
 /* ##### action center ##### */
 .dashboardActionCenter {
     background-color: var(--surface-color);
