@@ -98,22 +98,21 @@
             <h1>Freelance Client Dashboard</h1>
 
             <!-- metric cards -->
-            <div></div>
+            <section class="metricCards" id="metricCards"></section>
 
             <!-- earnings overview -->
-            <div>
+            <section class="dashboardPanel">
                 <h2>Earnings Overview</h2>
-
-                <!-- graph placeholder -->
-                <div></div>
-            </div>
+                <div class="chartContainer">
+                    <canvas id="earningsChart" height="140" aria-label="Earnings overview chart"></canvas>
+                </div>
+            </section>
 
             <!-- recent activity -->
-            <div>
+            <section class="dashboardPanel">
                 <h2>Recent Activity</h2>
-                <!-- activity placeholder -->
-                <div></div>
-            </div>
+                <div class="activityList" id="recentActivity"></div>
+            </section>
         </section>
 
     </main>
@@ -121,6 +120,11 @@
     <!-- bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+
+    <!-- charts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"
+        integrity="sha384-0pUgB/8SDpLxHjPUsU6WSNkuh4hVFYl7nEogQOo0EVkTk+U5GQ2v0K1y4hGpnZ9d"
         crossorigin="anonymous"></script>
 
     <!-- custom js -->

@@ -201,3 +201,157 @@ div h4:hover {
     padding-bottom: 1rem;
     margin-bottom: 2rem;
 }
+
+/* ##### dashboard ##### */
+.metricCards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+}
+
+.metricCard {
+    background-color: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: 0.75rem;
+    padding: 1rem 1.25rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.metricCard h3 {
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: var(--subheading-font-weight);
+    color: var(--subtext-color);
+}
+
+.metricValue {
+    margin: 0.25rem 0 0;
+    font-size: 1.75rem;
+    font-weight: var(--heading-font-weight);
+    color: var(--headings-color);
+    line-height: 1.1;
+}
+
+.metricIcon {
+    width: 2.2rem;
+    height: 2.2rem;
+    border-radius: 999px;
+    display: grid;
+    place-items: center;
+    color: var(--surface-color);
+    flex: 0 0 auto;
+}
+
+.metricIcon.success {
+    background-color: color-mix(in srgb, var(--success-color), transparent 10%);
+}
+
+.metricIcon.warning {
+    background-color: color-mix(in srgb, var(--warning-color), transparent 10%);
+}
+
+.metricIcon.primary {
+    background-color: color-mix(in srgb, var(--color-primary), transparent 10%);
+}
+
+.dashboardPanel {
+    background-color: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: 0.75rem;
+    padding: 1rem 1.25rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+    margin-top: 1.25rem;
+}
+
+.dashboardPanel h2 {
+    font-size: 1.25rem;
+    font-weight: var(--heading-font-weight);
+    color: var(--headings-color);
+    margin: 0 0 0.75rem;
+}
+
+.chartContainer {
+    width: 100%;
+}
+
+.activityList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.activityItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.75rem 0.75rem;
+    border: 1px solid color-mix(in srgb, var(--border-color), transparent 30%);
+    border-radius: 0.75rem;
+    background-color: color-mix(in srgb, var(--surface-color), transparent 10%);
+}
+
+.activityLeft {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-width: 0;
+}
+
+.activityDot {
+    width: 0.85rem;
+    height: 0.85rem;
+    border-radius: 999px;
+    flex: 0 0 auto;
+    background-color: var(--labels-color);
+}
+
+.activityDot.success {
+    background-color: var(--success-color);
+}
+
+.activityDot.warning {
+    background-color: var(--warning-color);
+}
+
+.activityDot.primary {
+    background-color: var(--color-primary);
+}
+
+.activityText {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    min-width: 0;
+}
+
+.activityText .subject {
+    color: var(--text-color);
+    font-weight: var(--heading-font-weight);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 18rem;
+}
+
+.activityText .action {
+    color: var(--color-primary);
+    font-weight: var(--subheading-font-weight);
+}
+
+.activityTime {
+    color: var(--subtext-color);
+    font-size: 0.95rem;
+    white-space: nowrap;
+    flex: 0 0 auto;
+}
+
+@media (max-width: 992px) {
+    .metricCards {
+        grid-template-columns: 1fr;
+    }
+}

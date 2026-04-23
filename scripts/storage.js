@@ -12,6 +12,21 @@ function setData(key, data) {
     localStorage.setItem(key, JSON.stringify(data));
 }
 
+/* activity feed functions */
+function addActivity(activity) {
+    const activities = getData('activity');
+    activities.unshift(activity);
+    setData('activity', activities.slice(0, 50));
+}
+
+function getActivities() {
+    return getData('activity');
+}
+
+function timeNowISO() {
+    return new Date().toISOString();
+}
+
 
 /* create resuable functions for local storage operations */
 /* client functions */
@@ -20,6 +35,14 @@ function addClient(client) {
     const clients = getData('clients');
     clients.push(client);
     setData('clients', clients);
+
+    addActivity({
+        id: Date.now().toString(),
+        type: 'client',
+        subject: client.name || 'Client',
+        action: 'New Client Added',
+        createdAt: timeNowISO()
+    });
 }
 
 // getClients retrieves the list of clients from local storage.
@@ -48,6 +71,14 @@ function addProject(project) {
     const projects = getData('projects');
     projects.push(project);
     setData('projects', projects);
+
+    addActivity({
+        id: Date.now().toString(),
+        type: 'project',
+        subject: project.name || 'Project',
+        action: 'Project Created',
+        createdAt: timeNowISO()
+    });
 }
 
 // getProjects retrieves the list of projects from local storage.
@@ -65,8 +96,19 @@ function deleteProject(projectId) {
 // update project data by id
 function updateProject(projectId, updatedProject) {
     let projects = getData('projects');
+    const prev = projects.find(p => p.id === projectId);
     projects = projects.map(project => project.id === projectId ? updatedProject : project);
     setData('projects', projects);
+
+    if (prev?.status !== 'Completed' && updatedProject?.status === 'Completed') {
+        addActivity({
+            id: Date.now().toString(),
+            type: 'project',
+            subject: updatedProject.name || 'Project',
+            action: 'Project Completed',
+            createdAt: timeNowISO()
+        });
+    }
 }
 
 
@@ -76,6 +118,19 @@ function addPayment(payment) {
     const payments = getData('payments');
     payments.push(payment);
     setData('payments', payments);
+
+    const amount = Number(payment.amount || payment.budget || 0);
+    const label = Number.isFinite(amount)
+        ? new Intl.NumberFormat('en-KE', { style: 'currency', currency: 'KES' }).format(amount)
+        : '';
+
+    addActivity({
+        id: Date.now().toString(),
+        type: 'payment',
+        subject: payment.projectName || payment.clientName || 'Payment',
+        action: label ? `Payment Received (${label})` : 'Payment Received',
+        createdAt: timeNowISO()
+    });
 }
 
 // getPayments retrieves the list of payments from local storage.

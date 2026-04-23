@@ -120,4 +120,11 @@ td {
     border: 1px solid var(--border-color);
     border-radius: 0.5rem;
     font-size: var(--subheading-font-size);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+#projectSearchInput:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-primary), transparent 50%);
 }
